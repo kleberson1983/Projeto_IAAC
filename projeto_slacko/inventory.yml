@@ -3,4 +3,4 @@ remoto:
     10.0.0.11:
        datacenter: secundario
   vars:
-    path_api: '/opt/slacko-api/' 
+    path_api: /opt/slacko-api/

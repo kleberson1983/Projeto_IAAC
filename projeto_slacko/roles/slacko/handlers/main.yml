@@ -12,3 +12,4 @@
     name: slacko-api.service
     state: started
     enable: yes  
+

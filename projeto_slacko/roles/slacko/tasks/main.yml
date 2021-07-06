@@ -42,8 +42,9 @@
 - name: 'iniciando serviço'
   template:
     src: templates/slacko-api.service
-    dest: /etc/systemd/system/
+    dest: '{{ service_slacko }}'
     owner: root
     group: root
   notify:
-    - restart slacko-api.service 
+#    - enable slacko-api.service
+    - started slacko-api.service 

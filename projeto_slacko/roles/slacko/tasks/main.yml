@@ -46,5 +46,4 @@
     owner: root
     group: root
   notify:
-#    - enable slacko-api.service
     - started slacko-api.service 

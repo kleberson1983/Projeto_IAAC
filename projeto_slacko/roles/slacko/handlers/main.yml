@@ -7,16 +7,10 @@
     state: started
     enable: yes
 
-#- name: "Enable service slacko-api.service"
-#  ansible.builtin.systemd:
-#    name: slacko-api.service
-#    enabled: yes
-#    masked: no
-
-- name: "Start slacko-api.service" 
+- name: "started slacko-api.service" 
   ansible.builtin.systemd: 
     name: slacko-api.service
     state: started
-    enable: yes  
+    enable: yes   
 
 

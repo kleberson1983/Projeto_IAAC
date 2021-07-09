@@ -1,8 +1,12 @@
 - hosts: remoto
+  gather_facts: True
   become: yes
 
   roles:
     - slacko
 
+  debugger: on_skipped
 
-
+  vars:
+    service_slacko: "/etc/systemd/system/slacko-api.service"
+    path_api: "/opt/slacko-api/"

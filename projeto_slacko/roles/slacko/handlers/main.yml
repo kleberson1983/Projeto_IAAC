@@ -1,16 +1,27 @@
 ---
 # handlers file for slacko
 
-- name: "enable mongodb"
-  ansible.builtin.systemd: 
+- name: "copy.service"
+  ansible.builtin.service:
+    name: slacko-api
+    state: reloaded
+    enabled: yes
+ 
+
+- name: "start.service"
+  ansible.builtin.systemd:
+     state: restarted
+     name: slacko-api
+     enabled: yes
+     masked: no
+     daemon_reload: yes
+     daemon_reexec: yes
+  
+- name: "restart.mongodb"
+  systemd: 
     name: mongodb
     state: started
     enable: yes
-
-- name: "started slacko-api.service" 
-  ansible.builtin.systemd: 
-    name: slacko-api.service
-    state: started
-    enable: yes   
-
-
+    masked: no
+    ports:
+      - '27017:27017'

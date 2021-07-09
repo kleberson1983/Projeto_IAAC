@@ -1,7 +1,7 @@
 ---
 # tasks file for slacko
 
-- name: repositorio clone git
+- name: repo clone git
   git:
     repo: https://github.com/LeonardoDG2084/iaac_slacko-api
     dest: /opt
@@ -13,7 +13,7 @@
     state: present
     update_cache: yes
   notify:
-    - enable mongodb
+    - restart.mongodb
 
 - name: instalando python requirements
   pip:
@@ -22,28 +22,45 @@
 - name: criando diretorio slacko-api
   file: 
     path: "{{ path_api }}"
-    state: directory    
+    state: directory 
+    owner: root
+    group: root 
+    mode: 0755   
 
 - name:  copiando arquivos para o diretorio
   copy:
     src: "{{ item }}"
     dest: "{{ path_api }}"
-    mode: '0755'
+    owner: root
+    group: root
+    mode: 0755
     remote_src: yes
   with_items:
     - /opt/main.py  
 
+- name: Copiar script em service
+  copy:
+    src: templates/slacko-api.service
+    dest: /etc/systemd/system
+    owner: root
+    group: root
+
+  
 - name: 'copiando arquivo conf para o diretorio'
   template:
     src: templates/slacko-api.sh
     dest: "{{ path_api }}"
-    mode: '0755' 
+    owner: root
+    group: root
+    mode: 0755 
+ 
 
 - name: 'iniciando serviço'
   template:
-    src: templates/slacko-api.service
+    src: slacko-api.service
     dest: '{{ service_slacko }}'
     owner: root
     group: root
   notify:
-    - started slacko-api.service 
+    - copy.service
+    - start.service
